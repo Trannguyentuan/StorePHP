@@ -1,3 +1,9 @@
+<?php
+//include_once '../controller/';
+//start session
+include_once(__DIR__ . '/header.php');
+?>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -710,13 +716,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWLY_Y6FL7QGW5vcO3zajUEsrKfQPNzI"></script>
 <script  src="https://www.google.com/jsapi"></script>
 <script src="assets/js/map.js"></script>
-
-
-<!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
-
-<!-- Main JS -->
-<script src="assets/js/main.js"></script>
 
 
 

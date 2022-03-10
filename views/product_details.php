@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . '/header.php');
+include(__DIR__ . '/header.php');
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -17,11 +17,7 @@ include_once(__DIR__ . '/header.php');
     ========================= -->
 
 
-    <!-- Plugins CSS -->
-    <link rel="stylesheet" href="assets/css/plugins.css">
     
-    <!-- Main Style CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
@@ -29,6 +25,7 @@ include_once(__DIR__ . '/header.php');
 
     
     
+  
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area product_bread">
         <div class="container">   
@@ -996,17 +993,7 @@ include_once(__DIR__ . '/header.php');
     </div> 
     <!-- modal area start-->
     
-
-<!-- JS
-============================================ -->
-
-<!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
-
-<!-- Main JS -->
 <script src="assets/js/main.js"></script>
-
-
 
 </body>
 

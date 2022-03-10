@@ -3,9 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/shopp/views/about.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/views/home.php</file>
             <file>file:/C:/xampp/htdocs/shopp/index.php</file>
-            <file>file:/C:/xampp/htdocs/shopp/home.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/views/cart.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/model/repository.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/controller/product/product.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/views/shop.php</file>
             <file>file:/C:/xampp/htdocs/shopp/views/login.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/views/category.php</file>
+            <file>file:/C:/xampp/htdocs/shopp/views/product_details.php</file>
         </group>
     </open-files>
 </project-private>

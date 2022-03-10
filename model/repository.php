@@ -46,6 +46,11 @@ class repository {
         return $get;
     }
 //category
+    public function getAllCategory() {
+        $query='Select * from categories';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
 //order
     public function addOrder(orderDTO $orderDTO)
     {
@@ -61,22 +66,28 @@ class repository {
 //product
     public function getAllProduct() {
         $query='Select * from products';
-        $get=mysqli_query(connect(), $query);
-        return $get;
+        $stmt= connectPDO()->query($query);
+        return $stmt;
     }
     public function getProductById($id) {
-        $query="Select * from products where id=$id";
-        $get=mysqli_query(connect(), $query);
-        return $get;
+        $query='Select * from products where id=:id';
+        $$stmt = connectPDO()->prepare($query);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        return $stmt;
     }
-    public function getProductByCategory($cateid) {
-        $query="Select * from products where categoryId=$cateid";
-        $get=mysqli_query(connect(), $query);
-        return $get;
+    public function getProductByCategoryId($cateid) {
+        $query="Select * from products where categoryId=:cateid";
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cateid', $cateid);
+        $stmt->execute();
+        return $stmt;
     }
     public function getBestSeller()
     {
-        return 1;
+        $query='SELECT * FROM products ORDER BY sold DESC LIMIT 10';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
     }
 
 //user

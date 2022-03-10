@@ -1,5 +1,6 @@
 <?php
 //include_once '../controller/';
+include_once(__DIR__ . '/../controller/controller.php');
 //start session
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();}
@@ -13,8 +14,12 @@ $username='My Account';}
 else{$username=$_SESSION['username'];}
 // number of products in cart
 $cartCount = isset($_SESSION['unpaidItems']) ? $_SESSION['unpaidItems']['count'] : 0;
+
+$product=new Controller(new repository());
+$allcate=$product->getAllCategory();
+
 ?>
-!doctype html>
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -61,7 +66,7 @@ $cartCount = isset($_SESSION['unpaidItems']) ? $_SESSION['unpaidItems']['count']
                         <div class="top_right text-right">
                             <ul>
                                 <?php if($userID=='-1') //chua login
-                                        {echo "<li><a href='login.php'>Sign In</a></li>";}
+                                        {echo "<li><a href='login.php'>Log In</a></li>";}
                                     else {?>
                                         <li class="top_links">
                                             <a href="#"><?php echo $username; ?><i class="ion-chevron-down"></i></a>
@@ -168,14 +173,16 @@ $cartCount = isset($_SESSION['unpaidItems']) ? $_SESSION['unpaidItems']['count']
                             <div class="main_menu"> 
                                 <nav>  
                                     <ul>
-                                        <li class="active"><a href="index.php">Home </a></li>
+                                        <li class="active"><a href="../index.php">Home </a></li>
                                         <li><a href="shop.php">shop <i class="fa fa-angle-down"></i></a>
                                             <ul class="sub_menu pages">
-                                                    <li><a href="shop.html">Handbag</a></li>
-                                                    <li><a href="shop.html">Accessories</a></li>
-                                                    <li><a href="shop.html">Clothing</a></li>
-                                                    <li><a href="shop.html">Shoes</a></li>
-                                                    <li><a href="shop.html">Check Trousers</a></li>
+                                                <?php
+                                                while ($cate = $allcate->fetch( PDO::FETCH_ASSOC )) {
+                                                ?>
+                                                <li><a href=" <?php echo "shop.php?category=". $cate['cname'] ?>"><?php echo $cate["cname"] ?> </a></li>
+                                                <?php
+                                            }
+                                                ?>
                                             </ul>
                                         </li>
                                         <li><a href="about.php">About us</a></li>
@@ -206,6 +213,7 @@ $cartCount = isset($_SESSION['unpaidItems']) ? $_SESSION['unpaidItems']['count']
         </div>
         <!--header bottom end-->
     </header>
+
 <!-- JS
 ============================================ -->
 
@@ -213,7 +221,7 @@ $cartCount = isset($_SESSION['unpaidItems']) ? $_SESSION['unpaidItems']['count']
 <script src="assets/js/plugins.js"></script>
 
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+
 
 
 

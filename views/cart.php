@@ -298,14 +298,7 @@ include_once(__DIR__ . '/header.php');
 <script  src="https://www.google.com/jsapi"></script>
 <script src="assets/js/map.js"></script>
 
-
-<!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
-
-<!-- Main JS -->
 <script src="assets/js/main.js"></script>
-
-
 
 </body>
 
