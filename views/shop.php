@@ -1,7 +1,14 @@
 <?php
 //include_once '../controller/';
 //start session
-include_once(__DIR__ . '/header.php');
+
+include_once(__DIR__ . '/../controller/controller.php');
+include_once(__DIR__ . '/../controller/currency.php');
+$db=new Controller(new repository());
+$category=$db->getAllCategory();
+$cid=$db->getAllCategory();
+//$_SESSION['activepage']='shop';
+
 ?>
 
 <!doctype html>
@@ -10,7 +17,7 @@ include_once(__DIR__ . '/header.php');
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shop category</title>
+    <title>Shoppinggg</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -31,7 +38,7 @@ include_once(__DIR__ . '/header.php');
 <body>
 
  
-
+<?php include_once(__DIR__ . '/header.php'); ?>
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area">
         <div class="container">   
@@ -58,7 +65,7 @@ include_once(__DIR__ . '/header.php');
                     <div class="col-lg-3 col-md-12">
                        <!--sidebar widget start-->
                         <div class="sidebar_widget">
-                            <div class="widget_list widget_filter">
+<!-- filter price                           <div class="widget_list widget_filter">
                                 <h2>Filter by price</h2>
                                 <form action="#"> 
                                     <div id="slider-range"></div>   
@@ -66,19 +73,23 @@ include_once(__DIR__ . '/header.php');
                                     <input type="text" name="text" id="amount" />   
 
                                 </form> 
-                            </div>
+                            </div>-->
                             <div class="widget_list widget_categories">
-                                <h2>Product categories</h2>
+                                <h2>Category</h2>
                                 <ul>
-                                    <li><a href="#">Categories1 <span>6</span></a> </li>
-                                    <li><a href="#"> Categories2 <span>10</span></a> </li>
-                                    <li><a href="#">Categories3 <span>4</span></a> </li>
-                                    <li><a href="#"> Categories4 <span>4</span></a> </li>
-                                    <li><a href="#">Categories5 <span>3</span></a> </li>
-
+                                    <?php 
+                                    foreach ($category as $cate) {
+                                        
+                                    
+                                    ?>
+                                    <li class="active"><a href="shop.php?category=<?php echo $cate['cid'];if(isset($_GET['sortby'])){
+                                        echo '&sortby='.$_GET['sortby'];}?>"><?php echo $cate['cname'] ?><span>6</span></a> </li>
+                                        
+                                    <?php }?>
                                 </ul>
                             </div>
 
+  <!--filter more-->                          
                             <div class="widget_list widget_categories">
                                 <h2>Manufacturer</h2>
                                 <ul>
@@ -124,40 +135,58 @@ include_once(__DIR__ . '/header.php');
                             </div>
 
                         </div>
-                        <!--sidebar widget end-->
+<!--                        sidebar widget end-->
                     </div>
                     <div class="col-lg-9 col-md-12">
                         <!--shop wrapper start-->
                         <!--shop toolbar start-->
                         <div class="shop_title">
-                            <h1>shop</h1>
+                            <h1>everything here</h1>
                         </div>
                         <div class="shop_toolbar_wrapper">
                             <div class="shop_toolbar_btn">
 
-                                <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3"></button>
+                                <button data-role="grid_3" type="button" class="active btn-grid-3" data-toggle="tooltip" title="3 products"></button>
 
-                                <button data-role="grid_4" type="button"  class=" btn-grid-4" data-toggle="tooltip" title="4"></button>
+                                <button data-role="grid_4" type="button"  class=" btn-grid-4" data-toggle="tooltip" title="4 products"></button>
 
-                                <button data-role="grid_5" type="button"  class="btn-grid-5" data-toggle="tooltip" title="5"></button>
+                                <button data-role="grid_5" type="button"  class="btn-grid-5" data-toggle="tooltip" title="5 products"></button>
 
                                 <button data-role="grid_list" type="button"  class="btn-list" data-toggle="tooltip" title="List"></button>
                             </div>
-                            <div class=" niceselect_option">
-
-                                <form class="select_option" action="#">
-                                    <select name="orderby" id="short">
-
-                                        <option selected value="1">Sort by average rating</option>
-                                        <option  value="2">Sort by popularity</option>
-                                        <option value="3">Sort by newness</option>
-                                        <option value="4">Sort by price: low to high</option>
-                                        <option value="5">Sort by price: high to low</option>
-                                        <option value="6">Product Name: Z</option>
-                                    </select>
+                            <div >
+                                <?php $arr=array('1'=> 'Latest','2' => 'Popular' ,'3'=>'Top Sales','4'=>'Price: Low to High','5'=>'Price: High to Low','6'=>'A -> Z','7'=>'Z -> A');
+                                
+                                ?>
+                                <form name="myField" action="shop.php<?php if(isset($_GET['category'])){echo '?category='.$_GET['category'];}?>">
+                                    <select class=" nice-select" name='sortby' onchange="myField.submit();">
+                                                                                
+                                        <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='1'){
+                                                echo 'selected';
+                                            }} else {echo 'selected';} ?> value="1">Latest</option>
+                                        <option <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='2'){
+                                                echo 'selected';
+                                            }} ?> value="2">Top sales</option>
+                                        <option <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='3'){
+                                                echo 'selected';
+                                            }} ?> value="3">Price: Low to High</option>
+                                        <option <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='4'){
+                                                echo 'selected';
+                                            }} ?> value="4">Price: High to Low</option>
+                                        <option <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='5'){
+                                                echo 'selected';
+                                            }} ?> value="5">A -> Z</option>
+                                        <option <option <?php if(isset($_GET['sortby'])){
+                                            if($_GET['sortby']=='6'){
+                                                echo 'selected';
+                                            }} ?> value="6">Z -> A</option>
+                                    </select>                 
                                 </form>
-
-
                             </div>
                             <div class="page_amount">
                                 <p>Showing 1–9 of 21 results</p>
@@ -166,36 +195,53 @@ include_once(__DIR__ . '/header.php');
                          <!--shop toolbar end-->
                         
                          <div class="row shop_wrapper">
-                            <div class="col-lg-4 col-md-4 col-12 ">
+                            <?php
+                            //foreach($product as $row){
+                            $categoryfilter='';
+                            $sortby='';
+                            if(isset($_GET['category'])){
+                                $categoryfilter=$_GET['category'];
+                            }
+                            if(isset($_GET['sortby'])){
+                                $sortby=$_GET['sortby'];
+                            }
+                            
+                            $filter=$db->filter($categoryfilter,$sortby);
+                            while ($row = $filter->fetch(PDO::FETCH_ASSOC)) {                           
+                            ?>
+                             
+                             <div class="col-lg-4 col-md-4 col-12 ">
                                 <div class="single_product">
                                     <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product15.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product16.jpg" alt=""></a>
-
+                                        <a class="primary_img" href="product_details.php?productID=<?php echo $row['id'] ?>"><img src="assets/img/product/<?php echo $row['imageUrl']?>" alt=""></a>
+                                        <a class="secondary_img" href="product_details.php?productID=<?php echo $row['id'] ?>"><img src="assets/img/product/<?php echo $row['imageUrl']?>" alt=""></a>
                                         <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
+                                            <a href="product_details.php?productID=<?php echo $row['id'] ?>"title="quick_view">Xem sản phẩm</a>
                                         </div>
 
-                                        <div class="double_base">
+<!--                                        <div class="double_base">-->
                                             <div class="product_sale">
-                                                <span>-7%</span>
+                                                <span><?php if($row['discount']!=0) echo $row['discount'].'%' ?></span>
                                             </div>
-                                            <div class="label_product">
+<!--                                            <div class="label_product">
                                                 <span>new</span>
-                                            </div>
-                                        </div>
+                                            </div>-->
+<!--                                        </div>-->
                                     </div>
                                     
                                     <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
+                                        
+                                        <h3><a href="product_details.php?productID=<?php echo $row['id'] ?>"><?php echo $row['name'] ?></a></h3>
+                                        <span classS"current_price"><?php echo num(pricediscount($row['price'], $row['discount']))?></span>
+                                        <?php if($row['discount']!=0){?>
+                                        <span class="old_price"><?php echo num($row['price']) ?></span>
+                                        <?php } ?>
                                     </div>
                                     
                                     
                                     <div class="product_content list_content">
                                         <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
+<!--                                        <div class="product_ratting">
                                             <ul>
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -203,669 +249,24 @@ include_once(__DIR__ . '/header.php');
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                                 <li><a href="#"><i class="fa fa-star"></i></a></li>
                                             </ul>
-                                        </div>
+                                        </div>-->
                                         <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
+                                            <span classS"current_price"><?php echo num(pricediscount($row['price'], $row['discount']))?></span>
+                                        <?php if($row['discount']!=0){?>
+                                        <span class="old_price"><?php echo num($row['price']) ?></span>
+                                        <?php } ?>
                                         </div>
                                         <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
+                                            <p><?php echo $row['description'] ?></p>
                                         </div>
 
                                     </div>
                                     
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product22.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product23.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="label_product">
-                                            <span>new</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Koss KPH7 Portable</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Koss KPH7 Portable</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product10.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="double_base">
-                                            <div class="product_sale">
-                                                <span>-7%</span>
-                                            </div>
-                                            <div class="label_product">
-                                                <span>new</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Beats Solo2 Solo 2</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Beats Solo2 Solo 2</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product17.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product18.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="label_product">
-                                            <span>new</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Beats EP Wired</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Beats EP Wired</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product19.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product20.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Bose SoundLink Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Bose SoundLink Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product21.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product22.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="double_base">
-                                            <div class="product_sale">
-                                                <span>-7%</span>
-                                            </div>
-                                            <div class="label_product">
-                                                <span>new</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Apple iPhone SE 16GB</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Apple iPhone SE 16GB</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product23.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product24.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Beats Solo Wireless</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Beats Solo Wireless</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product25.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product26.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="label_product">
-                                            <span>new</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Apple iPad with Retina</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Apple iPad with Retina</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product27.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product28.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product2.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product1.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-                                         <div class="label_product">
-                                            <span>new</span>
-                                        </div>   
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">JBL Flip 3 Portable</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">JBL Flip 3 Portable</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product3.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product4.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product5.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product6.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="double_base">
-                                            <div class="product_sale">
-                                                <span>-7%</span>
-                                            </div>
-                                            <div class="label_product">
-                                                <span>new</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product7.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product8.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product9.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product10.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="product_sale">
-                                            <span>-7%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                        <span class="old_price">£86.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12 ">
-                                <div class="single_product">
-                                    <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="assets/img/product/product11.jpg" alt=""></a>
-                                        <a class="secondary_img" href="product-details.html"><img src="assets/img/product/product12.jpg" alt=""></a>
-
-                                        <div class="quick_button">
-                                            <a href="product-details.html"title="quick_view">Xem sản phẩm</a>
-                                        </div>
-
-                                        <div class="label_product">
-                                            <span>new</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="product_content grid_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <span class="current_price">£60.00</span>
-                                    </div>
-                                    
-                                    
-                                    <div class="product_content list_content">
-                                        <h3><a href="product-details.html">Marshall Portable  Bluetooth</a></h3>
-                                        <div class="product_ratting">
-                                            <ul>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product_price">
-                                            <span class="current_price">£60.00</span>
-                                            <span class="old_price">£86.00</span>
-                                        </div>
-                                        <div class="product_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad, iure incidunt. Ab consequatur temporibus non eveniet inventore doloremque necessitatibus sed, ducimus quisquam, ad asperiores eligendi quia fugiat minus doloribus distinctio assumenda pariatur, quidem laborum quae quasi suscipit. Cupiditate dolor blanditiis rerum aliquid temporibus, libero minus nihil, veniam suscipit? Autem repellendus illo, amet praesentium fugit, velit natus? Dolorum perferendis reiciendis in quam porro ratione eveniet, tempora saepe ducimus, alias?</p>
-                                        </div>
-
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="shop_toolbar t_bottom">
-                            <div class="pagination">
-                                <ul>
-                                    <li class="current">1</li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li class="next"><a href="#">next</a></li>
-                                    <li><a href="#">>></a></li>
-                                </ul>
-                            </div>
-                        </div>
+                            <?php }?>
+                         </div>
+                    </div>
                         <!--shop toolbar end-->
                         <!--shop wrapper end-->
                     </div>
@@ -873,106 +274,10 @@ include_once(__DIR__ . '/header.php');
             </div>   
                 
         </div>
-    </div>
     <!--shop  area end-->
-    
-    <!--footer area start-->
-    <footer class="footer_widgets">
-        <div class="footer_top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                        <div class="widgets_container">
-                            <h3>Information</h3>
-                            <div class="footer_menu">
-                                <ul>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="#">Delivery Information</a></li>
-                                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
-                                    <li><a href="#">Returns</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-sm-6 col-6">
-                        <div class="widgets_container">
-                            <h3>Extras</h3>
-                            <div class="footer_menu">
-                                <ul>
-                                    <li><a href="#">Brands</a></li>
-                                    <li><a href="#">Gift Certificates</a></li>
-                                    <li><a href="#">Affiliate</a></li>
-                                    <li><a href="#">Specials</a></li>
-                                    <li><a href="contact.html">Site Map</a></li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widgets_container contact_us">
-                            <h3>Contact Us</h3>
-                            <div class="footer_contact">
-                                <p>Address: 6688 Princess Road, London, Greater London BAS 23JK, UK</p>
-                                <p>Phone: <a href="tel:+(+012)800456789-987">(+012) 800 456 789 - 987</a> </p>
-                                <p>Email: demo@example.com</p>
-                                <ul>
-                                    <li><a href="#" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#" title="google-plus"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#" title="facebook"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" title="youtube"><i class="fa fa-youtube"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="widgets_container newsletter">
-                            <h3>Join Our Newsletter Now</h3>
-                            <div class="newleter-content">
-                                <p>Exceptional quality. Ethical factories. Sign up to enjoy free U.S. shipping and returns on your first order.</p>
-                                <div class="subscribe_form">
-                                    <form id="mc-form" class="mc-form footer-newsletter" >
-                                        <input id="mc-email" type="email" autocomplete="off" placeholder="Enter you email address here..." />
-                                        <button id="mc-submit">Subscribe !</button>
-                                    </form>
-                                    <!-- mailchimp-alerts Start -->
-                                    <div class="mailchimp-alerts text-centre">
-                                        <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
-                                        <div class="mailchimp-success"></div><!-- mailchimp-success end -->
-                                        <div class="mailchimp-error"></div><!-- mailchimp-error end -->
-                                    </div><!-- mailchimp-alerts end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer_bottom">
-            <div class="container">
-               <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="copyright_area">
-                            <p> &copy; 2021 <strong> </strong> Mede with ❤️ by <a href="https://hasthemes.com/" target="_blank"><strong>HasThemes</strong></a></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="footer_custom_links">
-                            <ul>
-                                <li><a href="#">Order History</a></li>
-                                <li><a href="wishlist.html">Wish List</a></li>
-                                <li><a href="#">Newsletter</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!--footer area end-->
-    
+<?php
+include './footer.php';
+?>
     <!-- modal area start-->
     <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

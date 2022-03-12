@@ -1,14 +1,16 @@
 <?php
 //include_once '../controller/';
 //start session
-include(__DIR__ . '/header.php');
 include_once(__DIR__ . '/../controller/controller.php');
 include_once(__DIR__ . '/../controller/currency.php');
 $db=new Controller(new repository());
 $category=$db->getAllCategory();
-$catego=$db->getAllCategory();
+$catego=$db->getAllCategory();//do loi chay 2lan while hay foreach ko dc :((
 //$ca=$category->fetch( PDO::FETCH_ASSOC);
 //$productbycateid=$product->getByCategory($cateid);
+
+$_SESSION['activepage']='home';
+
 ?>
 
 <!doctype html>
@@ -36,7 +38,7 @@ $catego=$db->getAllCategory();
 </head>
 
 <body>
-
+<?php include_once(__DIR__ . '/header.php'); ?>
     <!--slider area start-->
     <div class="slider_area slider_style home_three_slider owl-carousel">
         <div class="single_slider" data-bgimg="assets/img/slider/slider4.jpg">
@@ -163,7 +165,7 @@ $catego=$db->getAllCategory();
             <div class="product_container">
                         <div class="row product_column4">
                             <?php
-                            $pro=$product->getProductByCateId($cname['cid']);
+                            $pro=$db->getProductByCateId($cname['cid']);
                             while ($row = $pro->fetch(PDO::FETCH_ASSOC)) {                           
                             ?>
                             <div class="col-lg-3">
@@ -211,10 +213,10 @@ $catego=$db->getAllCategory();
                <div class="col-lg-6 col-md-6">
                     <div class="banner_area">
                         <div class="banner_thumb">
-                            <a href="shop.php?category=Accessories"><img src="assets/img/bg/banner11.jpg" alt="#"></a>
+                            <a href="shop.php?category=6"><img src="assets/img/bg/banner11.jpg" alt="#"></a>
                             <div class="banner_content">
                                <h1>Handbag <br> Men’s Collection</h1>
-                                <a href="shop.php?category=Accessories">Discover Now</a>
+                                <a href="shop.php?category=6">Discover Now</a>
                             </div>
                         </div>
                     </div>
@@ -222,10 +224,10 @@ $catego=$db->getAllCategory();
                 <div class="col-lg-6 col-md-6">
                     <div class="banner_area">
                         <div class="banner_thumb">
-                            <a href="shop.php?category=Shoes"><img src="assets/img/bg/banner12.jpg" alt="#"></a>
+                            <a href="shop.php?category=7"><img src="assets/img/bg/banner12.jpg" alt="#"></a>
                             <div class="banner_content">
                                <h1>Sneaker <br>Collection Edition</h1>
-                                <a href="shop.php?category=Shoes">Discover Now</a>
+                                <a href="shop.php?category=7">Discover Now</a>
                             </div>
                         </div>
                     </div>

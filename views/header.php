@@ -99,7 +99,8 @@ $allcate=$product->getAllCategory();
                         </div>
                         <div class="col-lg-4">
                             <div class="logo">
-                                <a href="../index.php"><img src="assets/img/logo/logo.png" alt="home"></a>
+<!--                                <a href="../index.php"><img src="assets/img/logo/logo.png" alt="home"></a>-->
+                                <a href="../index.php"><h2>TNT</h2></a>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -173,13 +174,13 @@ $allcate=$product->getAllCategory();
                             <div class="main_menu"> 
                                 <nav>  
                                     <ul>
-                                        <li class="active"><a href="../index.php">Home </a></li>
-                                        <li><a href="shop.php">shop <i class="fa fa-angle-down"></i></a>
+                                        <li class="active" ><a href="../index.php">Home </a></li>                                      
+                                        <li  ><a href="shop.php">shop <i class="fa fa-angle-down"></i></a>
                                             <ul class="sub_menu pages">
                                                 <?php
                                                 while ($cate = $allcate->fetch( PDO::FETCH_ASSOC )) {
                                                 ?>
-                                                <li><a href=" <?php echo "shop.php?category=". $cate['cname'] ?>"><?php echo $cate["cname"] ?> </a></li>
+                                                <li><a href=" <?php echo "shop.php?category=". $cate['cid'] ?>"><?php echo $cate["cname"] ?> </a></li>
                                                 <?php
                                             }
                                                 ?>

@@ -89,7 +89,90 @@ class repository {
         $stmt= connectPDO()->query($query);
         return $stmt;
     }
-
+    public function getPopular() //lay ban dc nhieu ko limit
+    {
+        $query='SELECT * FROM products ORDER BY sold DESC';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getLatest()
+    {
+        $query='SELECT * FROM products ORDER BY createAt DESC ';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getPriceUp()
+    {
+        $query='SELECT * FROM products ORDER BY price asc ';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getPriceDown()
+    {
+        $query='SELECT * FROM products ORDER BY price DESC ';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getAZ()
+    {
+        $query='SELECT * FROM products ORDER BY name asc ';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getZA()
+    {
+        $query='SELECT * FROM products ORDER BY name DESC ';
+        $stmt= connectPDO()->query($query);
+        return $stmt;
+    }
+    public function getCategory_Latest($cid) 
+    {       
+        $query='SELECT * FROM `products` WHERE categoryId=:cid ORDER BY  createAt DESC ';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+        public function getCategory_Popular($cid) //lay ban dc nhieu ko limit
+    {
+        $query='SELECT * FROM products ORDER BY sold DESC';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function getCategory_PriceUp($cid)
+    {
+        $query='SELECT * FROM products WHERE categoryId=:cid ORDER BY price asc ';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function getCategory_PriceDown($cid)
+    {
+        $query='SELECT * FROM products WHERE categoryId=:cid ORDER BY price DESC ';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function getCategory_AZ($cid)
+    {
+        $query='SELECT * FROM products WHERE categoryId=:cid ORDER BY name asc ';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function getCategory_ZA($cid)
+    {
+        $query='SELECT * FROM products WHERE categoryId=:cid ORDER BY name DESC ';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
 //user
     public function addUser(userDTO $userDTO) {
         $query='INSERT INTO `users`(`username`, `password`, `name`, `phone`, `email`, `imageUrl`, `roleId`) '
