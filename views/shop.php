@@ -23,6 +23,10 @@ $cid=$db->getAllCategory();
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
     
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ 
+    <script src="assets/js/sortby.js"></script>
+  
     <!-- CSS 
     ========================= -->
 
@@ -46,7 +50,7 @@ $cid=$db->getAllCategory();
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="index.php">home</a></li>
                             <li>/</li>
                             <li>shop</li>
                         </ul>
@@ -78,9 +82,7 @@ $cid=$db->getAllCategory();
                                 <h2>Category</h2>
                                 <ul>
                                     <?php 
-                                    foreach ($category as $cate) {
-                                        
-                                    
+                                    foreach ($category as $cate) {                           
                                     ?>
                                     <li class="active"><a href="shop.php?category=<?php echo $cate['cid'];if(isset($_GET['sortby'])){
                                         echo '&sortby='.$_GET['sortby'];}?>"><?php echo $cate['cname'] ?><span>6</span></a> </li>
@@ -158,8 +160,9 @@ $cid=$db->getAllCategory();
                                 <?php $arr=array('1'=> 'Latest','2' => 'Popular' ,'3'=>'Top Sales','4'=>'Price: Low to High','5'=>'Price: High to Low','6'=>'A -> Z','7'=>'Z -> A');
                                 
                                 ?>
-                                <form name="myField" action="shop.php<?php if(isset($_GET['category'])){echo '?category='.$_GET['category'];}?>">
-                                    <select class=" nice-select" name='sortby' onchange="myField.submit();">
+                                
+                                <form action="#">
+                                    <select class='nice-select'   id='sortby'>
                                                                                 
                                         <option <?php if(isset($_GET['sortby'])){
                                             if($_GET['sortby']=='1'){
@@ -187,6 +190,8 @@ $cid=$db->getAllCategory();
                                             }} ?> value="6">Z -> A</option>
                                     </select>                 
                                 </form>
+                                    
+                                       
                             </div>
                             <div class="page_amount">
                                 <p>Showing 1–9 of 21 results</p>
