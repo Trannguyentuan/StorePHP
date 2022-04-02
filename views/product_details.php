@@ -1,5 +1,15 @@
 <?php
 include(__DIR__ . '/header.php');
+include_once(__DIR__ . '/../controller/controller.php');
+include_once(__DIR__ . '/../controller/currency.php');
+$db=new Controller(new repository());
+$category=$db->getAllCategory();
+if(isset($_GET['productID']))
+{
+    $productID=$_GET['productID'];
+}
+$product_details=$db->getProductById($productID)->fetch(PDO::FETCH_ASSOC);//lay sp theo id
+
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -12,20 +22,11 @@ include(__DIR__ . '/header.php');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-    
-    <!-- CSS 
-    ========================= -->
-
-
-    
-
+    <link rel="stylesheet" href="assets/css/every.css">
 </head>
 
 <body>
-
     
-    
-  
     <!--breadcrumbs area start-->
     <div class="breadcrumbs_area product_bread">
         <div class="container">   
@@ -33,7 +34,7 @@ include(__DIR__ . '/header.php');
                 <div class="col-12">
                     <div class="breadcrumb_content">
                         <ul>
-                            <li><a href="index.html">home</a></li>
+                            <li><a href="index.php">home</a></li>
                             <li>/</li>
                             <li>product details</li>
                         </ul>
@@ -91,7 +92,7 @@ include(__DIR__ . '/header.php');
                     <div class="product_d_right">
                        <form action="#">
                            
-                            <h1>Amazon Cloud Cam</h1>
+                            <h1><?php echo $product_details['name'] ?></h1>
                             <div class=" product_ratting">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-star"></i></a></li>
@@ -104,32 +105,36 @@ include(__DIR__ . '/header.php');
                                 </ul>
                             </div>
                             <div class="product_price">
-                                <span class="current_price">$70.00</span>
+                                <span class="current_price"><?php if(($product_details)!=null) echo num(pricediscount($product_details['price'], $product_details['discount'])) ?></span>
                             </div>
                             <div class="product_desc">
-                                <p>More room to move. With 80GB or 160GB of storage and up to 40 hours of battery life, the new iPod classic lets you enjoy up to 40,000 songs or up to 200 hours of video or any combination wherever you go. Cover Flow. Browse through your music collection by flipping through album art. Select an album to turn it over and see the track list. Enhanced interface. Experience a whole new way to browse and view your music and video. Sleeker design. Beautiful, durable, and sleeker than ever, iPod classic now features an anodized aluminum and polish.. </p>
+                                <p><?php if($product_details!=null)echo $product_details['description'] ?> </p>
                             </div>
-
+                            <?php //get color size
+                            
+                            ?>
                             <div class="product_variant color">
                                 <h3>color</h3>
-                                <select class="niceselect_option" id="color" name="produc_color">
-                                    <option selected value="1">choose in option</option>        
-                                    <option value="2">choose in option2</option>              
-                                    <option value="3">choose in option3</option>              
-                                    <option value="4">choose in option4</option>              
-                                </select>   
+                                <select  id="id_color" multiple>
+                                    <option  value="1">White</option>
+                                  <option value="2">Black</option>
+                                  <option value="3">Red</option>
+                                  <option value="4">Yellow</option>
+                                  <option value="5">Green</option>
+                                </select>
                             </div>
-                            <div class="product_variant size">
+                         
+                            <div class="product_variant color">
                                 <h3>size</h3>
-                                <select class="niceselect_option" id="color1" name="produc_color">
-                                    <option selected value="1">size</option>        
-                                    <option value="2">x</option>              
-                                    <option value="2">xl</option>              
-                                    <option value="3">md</option>              
-                                    <option value="4">xxl</option>              
-                                    <option value="4">s</option>              
-                                </select> 
+                                <select  id="id_size" multiple>
+                                    <option  value="1">M</option>
+                                  <option value="2">L</option>
+                                  <option value="3">XL</option>
+                                  <option value="4">XXL</option>
+                                  <option value="5"><?php if(isset($_POST['option_color'])) echo $_POST['option_color'] ?></option>
+                                </select>
                             </div>
+                            
                             <div class="product_variant quantity">
                                 <label>quantity</label>
                                 <input min="1" max="100" value="1" type="number">

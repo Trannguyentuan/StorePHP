@@ -71,7 +71,7 @@ class repository {
     }
     public function getProductById($id) {
         $query='Select * from products where id=:id';
-        $$stmt = connectPDO()->prepare($query);
+        $stmt = connectPDO()->prepare($query);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         return $stmt;
@@ -170,6 +170,16 @@ class repository {
         $query='SELECT * FROM products WHERE categoryId=:cid ORDER BY name DESC ';
         $stmt= connectPDO()->prepare($query);
         $stmt->bindValue(':cid', $cid);
+        $stmt->execute();
+        return $stmt;
+    }
+ 
+//product_details
+    public function getProduct_detailsById($id) 
+    {
+        $query='SELECT * FROM product_details WHERE productId=:id';
+        $stmt= connectPDO()->prepare($query);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
         return $stmt;
     }

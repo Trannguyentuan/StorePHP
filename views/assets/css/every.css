@@ -1,0 +1,57 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 27, 2022, 9:49:51 PM
+    Author     : pynamic
+*/
+
+#id_color{
+  height: 44px;
+  border: none;
+  overflow: hidden;
+}
+#id_color::-moz-focus-inner {
+  border: 0;
+}
+#id_color:focus {
+  outline: none;
+}
+#id_color option{
+  width: 60px;
+  font-size: 1.2em;
+  padding: 10px 0;
+  text-align: center;
+  margin-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  border:#000 solid 2px;
+  border-radius: 5px;
+  color: #000;
+}
+
+
+#id_size{
+  height: 44px;
+  border: none;
+  overflow: hidden;
+}
+#id_size::-moz-focus-inner {
+  border: 0;
+}
+#id_size:focus {
+  outline: none;
+}
+#id_size option{
+  width: 60px;
+  font-size: 1.2em;
+  padding: 10px 0;
+  text-align: center;
+  margin-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  border:#000 solid 2px;
+  border-radius: 5px;
+  color: #000;
+}

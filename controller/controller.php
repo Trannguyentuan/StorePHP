@@ -16,6 +16,10 @@ class Controller{
     {
         return $this->db->getAllCategory();
     }
+    public function getProductById($id) 
+    {
+        return $this->db->getProductById($id);
+    }
     public function getProductByCateId($cateid)
     {
         return $this->db->getProductByCategoryId($cateid);
@@ -48,6 +52,11 @@ class Controller{
     {
         return $this->db->getZA();
     }
+    public function getProduct_detailsById($id)
+    {
+        $this->db->getProduct_detailsById($id);
+    }
+
     public function filter($cid,$sortby)
     {
         $popular=$this->db->getPopular();
